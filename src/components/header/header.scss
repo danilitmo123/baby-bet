@@ -1,0 +1,47 @@
+.container {
+  max-width: 1300px;
+
+  .header-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px;
+
+    .header-nav {
+      display: flex;
+      justify-content: center;
+
+      .header-nav-items {
+        margin-right: 30px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 24px;
+
+        a {
+          margin-right: 25px;
+          font-family: 'Roboto', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          color: #000;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &.active {
+          background-color: #8468F5;
+          color: #fff;
+          padding: 5px;
+          border-radius: 8px;
+          transition: background-color 1s;
+        }
+      }
+    }
+  }
+}

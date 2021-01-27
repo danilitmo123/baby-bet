@@ -1,0 +1,32 @@
+.charity-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 56px;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.charity-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  .charity-logo {
+
+    img {
+      width: 250px;
+      height: 240px;
+      margin-right: 150px;
+    }
+  }
+
+  .charity-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    max-width: 800px;
+  }
+
+}

@@ -1,0 +1,78 @@
+.footer-wrapper {
+  background-color: #8468F5;
+
+  .footer-nav-bar {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    overflow: auto;
+    padding: 30px;
+    color: white;
+
+    .footer-logo {
+      margin-right: 300px;
+
+      .footer-text {
+        color: white;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+
+    .about-us {
+      margin-right: 50px;
+
+      .about-us-title {
+        font-size: 20px;
+      }
+
+      .nav-items {
+
+        .item {
+          margin-top: 5px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .contacts {
+      margin-right: 50px;
+
+      .contacts-title {
+        font-size: 20px;
+      }
+
+      .nav-items {
+
+        .item {
+          margin-top: 5px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .downloads {
+      .downloads-title {
+        font-size: 20px;
+      }
+
+      .nav-items {
+
+        .item {
+          margin-top: 5px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.card-button {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5.0px);
+  -webkit-backdrop-filter: blur(5.0px);
+  border-radius: 18px;
+  border: none;
+  margin-top: 30px;
+  width: 200px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+
+  a {
+    color: #000000;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
