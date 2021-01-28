@@ -23,6 +23,10 @@
     img {
       width: 600px;
       height: 450px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -35,6 +39,10 @@
       margin-top: -100px;
       width: 600px;
       height: 450px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

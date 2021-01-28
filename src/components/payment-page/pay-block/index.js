@@ -8,57 +8,68 @@ import fourthCalendar from '../../../assets/fourth-calendar.png'
 import Input from "../../input";
 
 
-// class PayBlock extends Component{
-//     constructor(props) {
-//         super(props);
-//
-//         this.state = {
-//             toggleClass: false
-//         }
-//     }
-//
-//     toggleFunc = () => {
-//         this.setState({toggleClass: !this.state.toggleClass})
-//     }
-//
-//     render() {
-//         return(
-//             <div>
-//                 <button className={'btn'} >Click Me</button>
-//                 <div
-//                     onClick={this.toggleFunc}
-//                     className={this.state.toggleClass ? 'wrapper classOnTrue' : 'wrapper classOnFalse'}>hello world</div>
-//             </div>
-//         )
-//     }
-// }
-//
-// export default PayBlock
-
+const PRICE_FOR_TEXT = 1000
+const PRICE_FOR_IMG = 500
+const PRICE_FOR_PERSONALIZATION = 1500
+const PRICE_FOR_SUGGESTIONS = 1200
 
 class PayBlock extends Component {
+
 
     state = {
         firstActiveBlock: false,
         secondActiveBlock: false,
         thirdActiveBlock: false,
-        fourthActiveBlock: false
+        fourthActiveBlock: false,
+        initialPrice: 5000
     }
 
     toggleFirstActiveBlock = () => {
-        this.setState({firstActiveBlock: !this.state.firstActiveBlock})
+        this.setState((state) => {
+            if (!state.firstActiveBlock) {
+                this.setState({firstActiveBlock: !state.firstActiveBlock})
+                this.setState({initialPrice: state.initialPrice + PRICE_FOR_TEXT})
+            } else {
+                this.setState({firstActiveBlock: !state.firstActiveBlock})
+                this.setState({initialPrice: state.initialPrice - PRICE_FOR_TEXT})
+            }
+        })
     }
 
     toggleSecondActiveBlock = () => {
-        this.setState({secondActiveBlock: !this.state.secondActiveBlock})
+        this.setState((state) => {
+            if (!state.secondActiveBlock) {
+                this.setState({secondActiveBlock: !state.secondActiveBlock})
+                this.setState({initialPrice: state.initialPrice + PRICE_FOR_IMG})
+            } else {
+                this.setState({secondActiveBlock: !state.secondActiveBlock})
+                this.setState({initialPrice: state.initialPrice - PRICE_FOR_IMG})
+            }
+        })
     }
 
     toggleThirdActiveBlock = () => {
-        this.setState({thirdActiveBlock: !this.state.thirdActiveBlock})
+        this.setState((state) => {
+            if (!state.thirdActiveBlock) {
+                this.setState({thirdActiveBlock: !state.thirdActiveBlock})
+                this.setState({initialPrice: state.initialPrice + PRICE_FOR_SUGGESTIONS})
+            } else {
+                this.setState({thirdActiveBlock: !state.thirdActiveBlock})
+                this.setState({initialPrice: state.initialPrice - PRICE_FOR_SUGGESTIONS})
+            }
+        })
     }
 
     toggleFourthActiveBlock = () => {
-        this.setState({fourthActiveBlock: !this.state.fourthActiveBlock})
+        this.setState((state) => {
+            if (!state.fourthActiveBlock) {
+                this.setState({fourthActiveBlock: !state.fourthActiveBlock})
+                this.setState({initialPrice: state.initialPrice + PRICE_FOR_PERSONALIZATION})
+            } else {
+                this.setState({fourthActiveBlock: !state.fourthActiveBlock})
+                this.setState({initialPrice: state.initialPrice - PRICE_FOR_PERSONALIZATION})
+            }
+        })
     }
 
     render() {
@@ -108,7 +119,9 @@ class PayBlock extends Component {
                         <div className="blocks">Добавить персонализированные поля</div>
                     </div>
                 </div>
-                <div className="total-price">Итоговая цена: 5000</div>
+                <div className="choose-individual">Персонализировать каленадарь</div>
+
+                <div className="total-price">Итоговая цена: {this.state.initialPrice}</div>
             </div>
         )
     }
