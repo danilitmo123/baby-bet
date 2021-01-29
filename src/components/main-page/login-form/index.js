@@ -4,30 +4,53 @@ import './login-form.scss'
 import close from "../../../assets/cancel.svg";
 import Input from "../../input";
 import CustomersService from "../../../service/CustomersService";
-
-const customersService = new CustomersService()
+import axiosAuthInstance from "../../../axiosAuthApi";
 
 class LoginForm extends Component {
+    // я удалил рефы, потому что у меня уже был готовый код под стейты. И как с рефами делать
+    // я не знаю :|
 
-    handleCreate = () => {
-        customersService.createUser(
-            {
-                'email': this.ref.email.value,
-                'password': this.ref.password.value
-            }
-        ).then((result) => {
-            console.log(result)
-            alert('User create')
-        }).catch(() => {
-            alert('Error')
-        })
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: "",
+            errors: [],
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit = (event) => {
-        this.handleCreate()
-        event.preventDefault()
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
     }
 
+    // асинхроность, Детка.
+    async handleSubmit(event) {
+        event.preventDefault();
+        try {
+            const promise = await axiosAuthInstance.post('/token/obtain/', {
+                email: this.state.username,
+                password: this.state.password
+            });
+            const dataPromise = promise.data
+            axiosAuthInstance.defaults.headers['Authorization'] = "JWT " + dataPromise.access;
+            localStorage.setItem('access_token', dataPromise.access);
+            localStorage.setItem('refresh_token', dataPromise.refresh);
+            console.log(localStorage.getItem('access_token'))
+            localStorage.setItem('logged_in', 'yes')
+            this.props.setActive(false) // надеюсь эта штука закрывает окно входа...
+
+            return promise;
+        } catch (error) {
+            console.log(error.stack);
+            this.setState({
+                errors: error.response.data
+            });
+        }
+    }
+  // А, чё, а где label для инпутов???
     render() {
         return (
             <form className={this.props.active ? 'login-wrapper active' : 'registration-wrapper'}
@@ -45,20 +68,24 @@ class LoginForm extends Component {
                     <div className="inputs-wrapper">
                         {/*<Input inputText={'Email'}/>*/}
                         {/*<Input inputText={'Пароль'}/>*/}
-                        <input
+                        <div>{this.state.errors.non_field_errors ? this.state.errors.non_field_errors: null}</div>
+                        <Input
+                            onChange={this.handleChange}
                             type={'text'}
-                            ref={'email'}
                             className={'form-control'}/>
-                        <input
+                        {/*сообщение об ошибке. Надо как-то стилезовать.*/}
+                            <div>{this.state.errors.email ? this.state.errors.email : null}</div>
+                        <Input
+                            onChange={this.handleChange}
                             type={'password'}
-                            ref={'password'}
                             className={'form-control'}/>
+                            <div>{this.state.errors.password ? this.state.errors.password : null}</div>
                         <button
                             type={'submit'}
-                            onClick={() => this.props.setActive(false)}
                             onSubmit={this.handleSubmit}
                             className={'form-button'}>Войти
                         </button>
+                        {/*onClick={() => this.props.setActive(false)} убрал так как возможно в форме ошибки */}
                     </div>
                 </div>
             </form>

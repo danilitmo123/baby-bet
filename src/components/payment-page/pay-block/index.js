@@ -6,6 +6,7 @@ import secondCalendar from '../../../assets/second-calendar.png'
 import thirdCalendar from '../../../assets/third-calendar.png'
 import fourthCalendar from '../../../assets/fourth-calendar.png'
 import Input from "../../input";
+import axiosAuthInstance from "../../../axiosAuthApi";
 
 
 const PRICE_FOR_TEXT = 1000
@@ -17,6 +18,10 @@ class PayBlock extends Component {
 
 
     state = {
+        baby_name: '',
+        month_birth: '',
+        email: '',
+        phone: '',
         firstActiveBlock: false,
         secondActiveBlock: false,
         thirdActiveBlock: false,
@@ -72,6 +77,30 @@ class PayBlock extends Component {
         })
     }
 
+    async handleSubmit(event) {
+        event.preventDefault();
+        try {
+            const response = await axiosAuthInstance.post('/order/create', {
+                baby_name: this.state.baby_name,
+                option_1: this.state.firstActiveBlock,
+                option_2: this.state.secondActiveBlock,
+                option_3: this.state.thirdActiveBlock,
+                option_4: this.state.fourthActiveBlock,
+                price: this.state.initialPrice,
+                email: this.state.email,
+                phone: this.state.phone,
+                month_birth: this.state.month_birth
+            });
+            alert('Заказ успешно отправлен')
+            return response;
+        } catch (error) {
+            console.log(error.stack);
+            this.setState({
+                errors: error.response.data
+            });
+        }
+    }
+
     render() {
         return (
             <div className="container">
@@ -122,6 +151,7 @@ class PayBlock extends Component {
                 <div className="choose-individual">Персонализировать каленадарь</div>
 
                 <div className="total-price">Итоговая цена: {this.state.initialPrice}</div>
+                but
             </div>
         )
     }
