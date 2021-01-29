@@ -5,6 +5,7 @@ import close from "../../../assets/cancel.svg";
 import Input from "../../input";
 import CustomersService from "../../../service/CustomersService";
 import axiosAuthInstance from "../../../axiosAuthApi";
+import Button from "../../button";
 
 class LoginForm extends Component {
     // я удалил рефы, потому что у меня уже был готовый код под стейты. И как с рефами делать
@@ -26,12 +27,13 @@ class LoginForm extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
+
     // асинхроность, Детка.
     async handleSubmit(event) {
         event.preventDefault();
         try {
-            const promise = await axiosAuthInstance.post('/token/obtain/', {
-                email: this.state.username,
+            const promise = await axiosAuthInstance.post('/token/obtain', {
+                email: this.state.email,
                 password: this.state.password
             });
             const dataPromise = promise.data
@@ -50,7 +52,8 @@ class LoginForm extends Component {
             });
         }
     }
-  // А, чё, а где label для инпутов???
+
+    // А, чё, а где label для инпутов???
     render() {
         return (
             <form className={this.props.active ? 'login-wrapper active' : 'registration-wrapper'}
@@ -68,21 +71,23 @@ class LoginForm extends Component {
                     <div className="inputs-wrapper">
                         {/*<Input inputText={'Email'}/>*/}
                         {/*<Input inputText={'Пароль'}/>*/}
-                        <div>{this.state.errors.non_field_errors ? this.state.errors.non_field_errors: null}</div>
+                        <div>{this.state.errors.non_field_errors ? this.state.errors.non_field_errors : null}</div>
                         <Input
                             onChange={this.handleChange}
                             type={'text'}
-                            className={'form-control'}/>
+                            className={'form-control'}
+                            Name={'email'}/>
                         {/*сообщение об ошибке. Надо как-то стилезовать.*/}
-                            <div>{this.state.errors.email ? this.state.errors.email : null}</div>
+                        <div>{this.state.errors.email ? this.state.errors.email : null}</div>
                         <Input
                             onChange={this.handleChange}
                             type={'password'}
-                            className={'form-control'}/>
-                            <div>{this.state.errors.password ? this.state.errors.password : null}</div>
+                            className={'form-control'}
+                            Name={'password'}/>
+                        <div>{this.state.errors.password ? this.state.errors.password : null}</div>
                         <button
                             type={'submit'}
-                            onSubmit={this.handleSubmit}
+                            onClick={this.handleSubmit}
                             className={'form-button'}>Войти
                         </button>
                         {/*onClick={() => this.props.setActive(false)} убрал так как возможно в форме ошибки */}

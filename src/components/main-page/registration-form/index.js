@@ -23,9 +23,6 @@ class RegistrationForm extends Component {
     }
 
     handleChange(event) {
-        console.log('changed')
-        console.log(event.target.name)
-
         this.setState({[event.target.name]: event.target.value});
     }
 

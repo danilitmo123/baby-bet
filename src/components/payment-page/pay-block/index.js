@@ -6,7 +6,7 @@ import secondCalendar from '../../../assets/second-calendar.png'
 import thirdCalendar from '../../../assets/third-calendar.png'
 import fourthCalendar from '../../../assets/fourth-calendar.png'
 import Input from "../../input";
-import axiosAuthInstance from "../../../axiosAuthApi";
+import axiosInstance from "../../../axiosApi";
 
 
 const PRICE_FOR_TEXT = 1000
@@ -16,18 +16,27 @@ const PRICE_FOR_SUGGESTIONS = 1200
 
 class PayBlock extends Component {
 
-
-    state = {
-        baby_name: '',
-        month_birth: '',
-        email: '',
-        phone: '',
-        firstActiveBlock: false,
-        secondActiveBlock: false,
-        thirdActiveBlock: false,
-        fourthActiveBlock: false,
-        initialPrice: 5000
+    constructor(props) {
+        super(props);
+        this.state = {
+            baby_name: '',
+            month_birth: '',
+            email: '',
+            phone: '',
+            firstActiveBlock: false,
+            secondActiveBlock: false,
+            thirdActiveBlock: false,
+            fourthActiveBlock: false,
+            initialPrice: 5000
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
+    }
+
 
     toggleFirstActiveBlock = () => {
         this.setState((state) => {
@@ -80,7 +89,7 @@ class PayBlock extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         try {
-            const response = await axiosAuthInstance.post('/order/create', {
+            const response = await axiosInstance.post('/order/create', {
                 baby_name: this.state.baby_name,
                 option_1: this.state.firstActiveBlock,
                 option_2: this.state.secondActiveBlock,
@@ -117,13 +126,13 @@ class PayBlock extends Component {
                 </div>
                 <div className="choose-name">Укажите имя ребенка и месяц рождения</div>
                 <div className="choose-name-inputs">
-                    <Input inputText={'Имя ребенка'}/>
-                    <Input inputText={'Месяц рождения'}/>
+                    <Input onChange={this.handleChange} Name={'baby_name'} inputText={'Имя ребенка'}/>
+                    <Input onChange={this.handleChange} Name={'month_birth'} inputText={'Месяц рождения'}/>
                 </div>
                 <div className="choose-info">Укажите номер телефона и почту</div>
                 <div className="choose-name-inputs">
-                    <Input inputText={'Email'}/>
-                    <Input inputText={'Телефон'}/>
+                    <Input onChange={this.handleChange} Name={'email'} inputText={'Email'}/>
+                    <Input onChange={this.handleChange} Name={'phone'} inputText={'Телефон'}/>
                 </div>
                 <div className="choose-upgrade">Улучшить календарь</div>
                 <div className="upgrade-block">
@@ -151,7 +160,7 @@ class PayBlock extends Component {
                 <div className="choose-individual">Персонализировать каленадарь</div>
 
                 <div className="total-price">Итоговая цена: {this.state.initialPrice}</div>
-                but
+                <button onClick={this.handleSubmit}>Сделать заказ</button>
             </div>
         )
     }
